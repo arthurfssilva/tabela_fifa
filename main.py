@@ -1,7 +1,8 @@
 import flet as ft
+from datetime import datetime
 
-# Função para verificar e criar o arquivo
-def check_and_create_file():
+# Função para verificar e criar os arquivos necessários
+def check_and_create_files():
     try:
         with open("teams.txt", "x") as f:
             f.write("TeamA,0,0,0,0,0,0,0,0\n")
@@ -9,13 +10,38 @@ def check_and_create_file():
     except FileExistsError:
         pass
 
-
+    try:
+        with open("matchhistory.txt", "x") as f:
+            pass
+    except FileExistsError:
+        pass
 
 def main(page: ft.Page):
-    # Verificar e criar o arquivo antes de qualquer operação
-    check_and_create_file()
+    # Verificar e criar os arquivos antes de qualquer operação
+    check_and_create_files()
     
     page.title = "UEFA Chapados League"
+    
+    # Função para adicionar uma partida ao histórico
+    def add_match_to_history(team1, team2, goals1, goals2):
+        match_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        with open("matchhistory.txt", "a") as f:
+            f.write(f"{match_date},{team1},{goals1},{team2},{goals2}\n")
+
+    # Função para exibir o histórico de partidas
+    def view_match_history():
+        with open("matchhistory.txt", "r") as f:
+            matches = [line.strip().split(",") for line in f.readlines()]
+
+        matches.sort(key=lambda x: datetime.strptime(x[0], "%Y-%m-%d %H:%M:%S"), reverse=True)
+        
+        match_history_list.controls.clear()
+        for match in matches:
+            match_date, team1, goals1, team2, goals2 = match
+            match_history_list.controls.append(ft.Text(f"{match_date} - {team1} {goals1} x {goals2} {team2}"))
+        page.update()
+
+    # Função para a página de gerenciamento de times
     def manage_teams_page(page):
         # Função para adicionar um novo time
         def add_team(e):
@@ -50,6 +76,7 @@ def main(page: ft.Page):
             ]
         )
        
+    # Função para a página da tabela
     def table_page(page):
         # Função para atualizar a visualização da tabela
         def update_table_view():
@@ -104,6 +131,7 @@ def main(page: ft.Page):
             ]
         )
     
+    # Função para a página de cadastro de partidas
     def matches_page(page):
         # Função para adicionar uma partida
         def add_match(e):
@@ -112,6 +140,7 @@ def main(page: ft.Page):
             g1 = int(team1_goals.value)
             g2 = int(team2_goals.value)
             update_scores(t1, t2, g1, g2)
+            add_match_to_history(t1, t2, g1, g2)
             team1.value = ""
             team2.value = ""
             team1_goals.value = ""
@@ -167,7 +196,18 @@ def main(page: ft.Page):
                 add_match_button
             ]
         )
+
+    # Função para a página de histórico de partidas
+    def match_history_page(page):
+        return ft.View(
+            "/match_history",
+            [
+                ft.AppBar(title=ft.Text("Histórico de Partidas"), bgcolor=ft.colors.SURFACE_VARIANT, leading=ft.IconButton(icon=ft.icons.ARROW_BACK, on_click=lambda _: page.go("/"))),
+                match_history_list
+            ]
+        )
     
+    # Roteamento
     def route_change(route):
         page.views.clear()
         if page.route == "/":
@@ -180,7 +220,8 @@ def main(page: ft.Page):
                             [
                                 ft.ElevatedButton("Tabela", on_click=lambda _: page.go("/table")),
                                 ft.ElevatedButton("Partidas", on_click=lambda _: page.go("/matches")),
-                                ft.ElevatedButton("Criar Time", on_click=lambda _: page.go("/manage_teams"))
+                                ft.ElevatedButton("Criar Time", on_click=lambda _: page.go("/manage_teams")),
+                                ft.ElevatedButton("Histórico de Partidas", on_click=lambda _: page.go("/match_history")),
                             ]
                         )
                     ]
@@ -192,6 +233,9 @@ def main(page: ft.Page):
             page.views.append(matches_page(page))
         elif page.route == "/manage_teams":
             page.views.append(manage_teams_page(page))
+        elif page.route == "/match_history":
+            view_match_history()
+            page.views.append(match_history_page(page))
         page.update()
     
     def view_pop(view):
@@ -199,6 +243,9 @@ def main(page: ft.Page):
         top_view = page.views[-1]
         page.go(top_view.route)
     
+    # Inicializar a lista de histórico de partidas
+    match_history_list = ft.ListView(controls=[])
+
     page.on_route_change = route_change
     page.on_view_pop = view_pop
     

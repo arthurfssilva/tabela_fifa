@@ -1,0 +1,17 @@
+2024-08-19 21:08:44,Jeziel,0,Arthur,2
+2024-08-19 22:17:59,Italo,2,Arthur,1
+2024-08-19 22:44:39,Italo,2,Jeziel,2
+2024-08-19 22:58:08,Arthur,1,Jeziel,2
+2024-08-19 23:09:24,Italo,1,Jeziel,2
+2024-08-19 23:24:16,Arthur,1,Jeziel,1
+2024-08-19 23:37:05,Arthur,5,Italo,2
+2024-08-19 23:50:49,Arthur,3,Jeziel,2
+2024-08-21 21:16:41,Italo,1,Jeziel,2
+2024-08-21 21:39:23,Jeziel,0,Arthur,1
+2024-08-21 22:02:37,Arthur,2,Italo,1
+2024-08-21 22:20:47,Arthur,2,Jeziel,1
+2024-08-21 22:45:22,Arthur,2,Italo,1
+2024-08-21 23:04:29,Arthur,1,Jeziel,1
+2024-08-21 23:22:07,Italo,6,Jeziel,0
+2024-08-21 23:33:18,Italo,1,Jeziel,2
+2024-08-21 23:56:07,Arthur,2,Jeziel,1
