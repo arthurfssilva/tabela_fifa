@@ -15,3 +15,12 @@
 2024-08-21 23:22:07,Italo,6,Jeziel,0
 2024-08-21 23:33:18,Italo,1,Jeziel,2
 2024-08-21 23:56:07,Arthur,2,Jeziel,1
+2024-08-24 22:37:36,Jeziel,2,Arthur,3
+2024-08-24 22:50:59,Italo,1,Arthur,0
+2024-08-24 23:06:08,Italo,3,Jeziel,3
+2024-08-24 23:21:43,Arthur,1,Jeziel,0
+2024-08-24 23:45:12,Arthur,1,Italo,4
+2024-08-24 23:59:13,Italo,3,Jeziel,1
+2024-08-25 00:15:47,Arthur,2,Italo,1
+2024-08-25 00:30:07,Jeziel,1,Arthur,1
+2024-08-25 00:43:05,Jeziel,1,Italo,2
